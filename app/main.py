@@ -211,6 +211,7 @@ async def play_audio_from_bilibili_video(msg: Message, bilibili_url: str=""):
             result = await bvid_to_music_by_local_bproxy(BVid=BVid)
         else:
             result = await bvid_to_music_by_bproxy(BVid=BVid)
+        logger.info("bilibili result:{}".format(result))
         if result:
             await msg.channel.send(f"已将 {result.name}-{result.author} 添加到播放列表")
             settings.playqueue.append(result)
@@ -229,9 +230,9 @@ async def search_music(msg: Message, *args):
     else:
         netease_candidates = await search_music_by_keyword(music_name=keyword)
         qqmusic_candidates = await qsearch_music_by_keyword(bot, keyword)
-        migu_candidates = await msearch_music_by_keyword(keyword)
+        #migu_candidates = await msearch_music_by_keyword(keyword)
 
-        candidates = netease_candidates + migu_candidates + qqmusic_candidates
+        candidates = netease_candidates + qqmusic_candidates
         if candidates:
             # put candidates into global cache first
             author_id = msg.author.id
@@ -247,7 +248,7 @@ async def search_music(msg: Message, *args):
                 *CS.searchCard(
                     {
                         "netease": netease_candidates,
-                        "migu": migu_candidates,
+                        #"migu": migu_candidates,
                         "qqmusic": qqmusic_candidates
                     }
                 )
