@@ -43,7 +43,8 @@ class ContainerHandler:
             "Tty": True,
             "OpenStdin": False,
             "HostConfig": {
-                "AutoRemove": True
+                "AutoRemove": True,
+                "ExtraHosts":["host.docker.internal:host-gateway"]
             },
             "Env": env_list,
         }
